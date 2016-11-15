@@ -8,14 +8,14 @@ from tkinter.ttk import *
 import tkinter as tk
 import webbrowser
 
-# globsearch = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods\\Lost Woods.mp3"
-# listdir = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods"
-# dirlist = "10029 Koji Kondo - Lost Woods"
-# artistmusic = "Koji Kondo - Lost Woods"
-# artistlist = "Koji Kondo"
-# artistlistlower = "koji kondo"
-# artistdic = " 'nano': 9 "
-# folderpath = "C:/Users/BW5442/Downloads/FelOsu/Nouveau dossier"
+# glob_search = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods\\Lost Woods.mp3"
+# list_dir = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods"
+# dir_list = "10029 Koji Kondo - Lost Woods"
+# artist_music = "Koji Kondo - Lost Woods"
+# artist_list = "Koji Kondo"
+# artist_list_lower = "koji kondo"
+# artist_dic = " 'nano': 9 "
+# folder_path = "C:/Users/BW5442/Downloads/FelOsu/Nouveau dossier"
 
 license_text = '''        This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
@@ -58,17 +58,28 @@ train_text = '''
 rail_text = '#' * 135
 
 cloud_text = '''
-_                   _                                              _                                                         _                                            _
- ))              (`  ).                   _                     (`  ).                   _                                (`  ).                   _                   (`  ).                        _                __
-  (             (     ).              .:(`  )`.                (     ).              .:(`  )`.                           (     ).              .:(`  )`.              (     ).                   .:(`  )`.           (
-__ )           _(       '`.          :(   .    )              _(       '`.          :(   .    )                         _(       '`.          :(   .    )            _(       '`.                :(   .    )        ((
-           .=(`(      .   )     .--  `.  (    ) )         .=(`(      .   )     .--  `.  (    ) )                    .=(`(      .   )     .--  `.  (    ) )       .=(`(      .   )     .--        `.  (    ) )        (
-_._          ((    (..__.:'-'   .+(   )   ` _`  ) )         ((    (..__.:'-'   .+(   )   ` _`  ) )                    ((    (..__.:'-'   .+(   )   ` _`  ) )       ((    (..__.:'-'   .+(   )          ` _`  ) )      '..
-   `.     `(       ) )       (   .  )     (   )  ._      `(       ) )       (   .  )   (  (   )         ._          `(       ) )       (   .  )     (   )        `(    __ ) )       (   .  )         (   )          ._
-     )      ` __.:'   )     (   (_  ))     `-'.-(`  )      ` __.:'   )     (   (   )) (    `-'.       -(`  )          ` __.:'   )     (   ( _))    ((   `-'.     -(`  )              ` __.:'         )   (       ( _)) (
-   )  )  ( )       --'       `- __.'         :(      ))           ( )       --'       `- __.'      :(      ))           ( )            --'         `- __.'       :(    ))         ( )                (--'         `- __.'
-___.-'  (_.'          .')                    `(    )  ))         (_.'          .')                 `(    )  ))         (_.'                                     `(    )  ))       (_.'
-                  (_  )                     ` __.:'                        (_  )                  ` __.:'                                                      ` __.:'
+_                  _                                              _                                                    \
+     _                                            _
+ ))              (`  ).                   _                     (`  ).                   _                             \
+    (`  ).                   _                   (`  ).                        _                __
+  (             (     ).              .:(`  )`.                (     ).              .:(`  )`.                         \
+    (     ).              .:(`  )`.              (     ).                   .:(`  )`.           (
+__ )           _(       '`.          :(   .    )              _(       '`.          :(   .    )                        \
+ _(       '`.          :(   .    )            _(       '`.                :(   .    )        ((
+           .=(`(      .   )     .--  `.  (    ) )         .=(`(      .   )     .--  `.  (    ) )                    .=(\
+           `(      .   )     .--  `.  (    ) )       .=(`(      .   )     .--        `.  (    ) )        (
+_._          ((    (..__.:'-'   .+(   )   ` _`  ) )         ((    (..__.:'-'   .+(   )   ` _`  ) )                    (\
+(    (..__.:'-'   .+(   )   ` _`  ) )       ((    (..__.:'-'   .+(   )          ` _`  ) )      '..
+   `.     `(       ) )       (   .  )     (   )  ._      `(       ) )       (   .  )   (  (   )         ._          `( \
+         ) )       (   .  )     (   )        `(    __ ) )       (   .  )         (   )          ._
+     )      ` __.:'   )     (   (_  ))     `-'.-(`  )      ` __.:'   )     (   (   )) (    `-'.       -(`  )          `\
+      __.:'   )     (   ( _))    ((   `-'.     -(`  )              ` __.:'         )   (       ( _)) (
+   )  )  ( )       --'       `- __.'         :(      ))           ( )       --'       `- __.'      :(      ))          \
+    ( )            --'         `- __.'       :(    ))         ( )                (--'         `- __.'
+___.-'  (_.'          .')                    `(    )  ))         (_.'          .')                 `(    )  ))         \
+(_.'                                     `(    )  ))       (_.'
+                  (_  )                     ` __.:'                        (_  )                  ` __.:'              \
+                                                          ` __.:'
                   '''
 
 mountain_text = '''
@@ -86,11 +97,11 @@ mountain_text = '''
 
 
 root = tk.Tk()
-artistmusic = []
-artistfolder = []
-browsetext1 = StringVar()
-browsetext2 = StringVar()
-radiovalue = IntVar()
+artist_music = []
+artist_folder = []
+browse_text1 = StringVar()
+browse_text2 = StringVar()
+radio_value = IntVar()
 
 ICON = (b'\x00\x00\x01\x00\x01\x00\x10\x10\x00\x00\x01\x00\x08\x00h\x05\x00\x00'
         b'\x16\x00\x00\x00(\x00\x00\x00\x10\x00\x00\x00 \x00\x00\x00\x01\x00'
@@ -134,21 +145,20 @@ class GraphicalUserInterface:
     def browse():
         for widget in root.winfo_children():
             widget.destroy()
-        global entry1, entry2
-        framebrowsewindowup = LabelFrame(root, text=" osu! folder ", relief=GROOVE)
-        framebrowsewindowbottom = LabelFrame(root, text=" Destination folder ", relief=GROOVE)
-        framebrowsewindowup.pack(side=TOP, padx=30, pady=8, fill="both", expand="yes")
-        framebrowsewindowbottom.pack(side=TOP, padx=30, pady=5, fill="both", expand="yes")
-        Label(framebrowsewindowup, text="""\nPlease, indicate osu! folder""").pack(side=TOP)
-        Button(framebrowsewindowup, text="Browse...",
+        frame_browse_window_up = LabelFrame(root, text=" osu! folder ", relief=GROOVE)
+        frame_browse_window_bottom = LabelFrame(root, text=" Destination folder ", relief=GROOVE)
+        frame_browse_window_up.pack(side=TOP, padx=30, pady=8, fill="both", expand="yes")
+        frame_browse_window_bottom.pack(side=TOP, padx=30, pady=5, fill="both", expand="yes")
+        Label(frame_browse_window_up, text="""\nPlease, indicate osu! folder""").pack(side=TOP)
+        Button(frame_browse_window_up, text="Browse...",
                command=func.get_source, width=9).pack(side=RIGHT, padx=12, pady=20)
-        entry1 = Entry(framebrowsewindowup, textvariable=browsetext1, width=70)
+        entry1 = Entry(frame_browse_window_up, textvariable=browse_text1, width=70)
         entry1.pack(side=RIGHT, padx=15)
-        Label(framebrowsewindowbottom,
+        Label(frame_browse_window_bottom,
               text="""\nPlease, indicate the folder where you want the files to be copied in""").pack(side=TOP)
-        Button(framebrowsewindowbottom, text="Browse...", width=9,
+        Button(frame_browse_window_bottom, text="Browse...", width=9,
                command=func.get_destination_path).pack(side=RIGHT, padx=12, pady=20)
-        entry2 = Entry(framebrowsewindowbottom, textvariable=browsetext2, width=70)
+        entry2 = Entry(frame_browse_window_bottom, textvariable=browse_text2, width=70)
         entry2.pack(side=RIGHT, padx=15)
         Button(root, text="Exit", command=gui.exit_func, width=10).pack(side=RIGHT, padx=12, pady=20)
         Button(root, text="Next >", command=func.browse_to_artist, width=10).pack(side=RIGHT, pady=20)
@@ -157,40 +167,41 @@ class GraphicalUserInterface:
     @staticmethod
     # Help window in browse window to help people with proposed choices
     def help_me():
-        helpwindow = tk.Tk()
-        helpwindow.minsize(580, 200)
-        helpwindow.maxsize(580, 200)
-        Label(helpwindow, text=help_text).pack()
+        help_window = tk.Tk()
+        help_window.minsize(580, 200)
+        help_window.maxsize(580, 200)
+        Label(help_window, text=help_text).pack()
 
     @staticmethod
     def artist_choice():
         for widget in root.winfo_children():
             widget.destroy()
-        global radiovalue, spinbox
-        framebrowsewindowtext = Frame(root, relief=GROOVE)
-        framebrowsewindow1 = Frame(root, relief=FLAT)
-        framebrowsewindow2 = Frame(root, relief=FLAT)
-        framebrowsewindow3 = Frame(root, relief=FLAT)
-        framebrowsewindow4 = Frame(root, relief=FLAT)
-        framebrowsewindowtext.pack(padx=60, pady=50, fill="both", expand="yes")
-        framebrowsewindow1.pack(padx=60, pady=5, fill="both", expand="yes")
-        framebrowsewindow2.pack(padx=60, pady=5, fill="both", expand="yes")
-        framebrowsewindow3.pack(padx=60, pady=5, fill="both", expand="yes")
-        framebrowsewindow4.pack(padx=60, pady=5, fill="both", expand="yes")
-        Label(framebrowsewindowtext, text="""
+        global radio_value
+        frame_browse_window_text = Frame(root, relief=GROOVE)
+        frame_browse_window1 = Frame(root, relief=FLAT)
+        frame_browse_window2 = Frame(root, relief=FLAT)
+        frame_browse_window3 = Frame(root, relief=FLAT)
+        frame_browse_window4 = Frame(root, relief=FLAT)
+        frame_browse_window_text.pack(padx=60, pady=50, fill="both", expand="yes")
+        frame_browse_window1.pack(padx=60, pady=5, fill="both", expand="yes")
+        frame_browse_window2.pack(padx=60, pady=5, fill="both", expand="yes")
+        frame_browse_window3.pack(padx=60, pady=5, fill="both", expand="yes")
+        frame_browse_window4.pack(padx=60, pady=5, fill="both", expand="yes")
+        Label(frame_browse_window_text, text="""
         Do you want to sort by artist ? For more precision, click "Help" in the bottom-left corner""").pack()
-        button1 = Radiobutton(framebrowsewindow1, text="No", variable=radiovalue, value=1)
-        button2 = Radiobutton(framebrowsewindow2, text="Yes for all", variable=radiovalue, value=2)
-        button3 = Radiobutton(framebrowsewindow3, text="Yes, but only from : ", variable=radiovalue, value=3)
-        button4 = Radiobutton(framebrowsewindow4, text="Yes, but only some artist I want to choose",
-                              variable=radiovalue, value=4)
+        button1 = Radiobutton(frame_browse_window1, text="No", variable=radio_value, value=1)
+        button2 = Radiobutton(frame_browse_window2, text="Yes for all", variable=radio_value, value=2)
+        button3 = Radiobutton(frame_browse_window3, text="Yes, but only from : ", variable=radio_value, value=3)
+        button4 = Radiobutton(frame_browse_window4, text="Yes, but only some artist I want to choose",
+                              variable=radio_value, value=4)
         button1.pack(side=LEFT), button2.pack(side=LEFT), button3.pack(side=LEFT), button4.pack(side=LEFT)
-        spinbox = Spinbox(framebrowsewindow3, from_=1, to=nbartistsmax, width=8, textvariable=1)
+        spinbox = Spinbox(frame_browse_window3, from_=1, to=nb_artists_max, width=8, textvariable=1)
         spinbox.pack(side=LEFT)
-        Label(framebrowsewindow3, text=" max = " + str(nbartistsmax)).pack(side=LEFT, padx=5)
+        Label(frame_browse_window3, text=" max = " + str(nb_artists_max)).pack(side=LEFT, padx=5)
         Button(root, text="Help", command=gui.help_me, width=10).pack(side=LEFT, padx=12, pady=20)
         Button(root, text="Exit", command=gui.exit_func, width=10).pack(side=RIGHT, padx=12, pady=20)
-        Button(root, text="Next >", command=func.artist_to_script, width=10).pack(side=RIGHT, pady=20)
+        Button(root, text="Next >", command=lambda: func.artist_to_script(spinbox.get()), width=10)\
+            .pack(side=RIGHT, pady=20)
         Button(root, text="< Previous", command=gui.browse, width=10).pack(side=RIGHT, padx=12, pady=20)
         func.detect_choice()
 
@@ -217,7 +228,7 @@ Click the link below to see if an update is available :
 
 class Function:
     @staticmethod
-    def callback(event):
+    def callback():
         webbrowser.open_new(r"https://osu.ppy.sh/forum/t/520493")
 
     @staticmethod
@@ -225,58 +236,56 @@ class Function:
     def get_source():
         global source
         source = askdirectory(title="Please, indicate osu! folder")
-        browsetext1.set(source)
+        browse_text1.set(source)
 
     @staticmethod
     # Open window which asks destination folder
     def get_destination_path():
-        global destinationpath
-        destinationpath = askdirectory(title="Please, indicate the folder where you want the files to be copied in"
-                                             " (To create a new folder, press right mouse button and choose "
-                                             "'New folder')")
-        browsetext2.set(destinationpath)
+        global destination_path
+        destination_path = askdirectory(title="Please, indicate the folder where you want the files to be copied in"
+                                              " (To create a new folder, press right mouse button and choose "
+                                              "'New folder')")
+        browse_text2.set(destination_path)
 
     @staticmethod
     def remove_garbage():  # Replace all bracket to avoid glob.glob empty list issue
-        listdirbase = glob.glob(source + "\\Songs\\*")
-        for element in listdirbase:
-            newpathname = element.replace("[", "-BRACKET1-").replace("]", "-BRACKET2-")
-            if newpathname != element:  # If there not same, remove "[" and "]" to avoid glob.glob bug (list empty)
-                os.rename(element, newpathname)
+        list_dir_base = glob.glob(source + "\\Songs\\*")
+        for element in list_dir_base:
+            new_path_name = element.replace("[", "-BRACKET1-").replace("]", "-BRACKET2-")
+            if new_path_name != element:  # If there not same, remove "[" and "]" to avoid glob.glob bug (list empty)
+                os.rename(element, new_path_name)
             else:
                 pass
         script()
 
     @staticmethod
     def detect_choice():
-        summusic = 0
+        sum_music = 0
         for extension in ['*.mp3', '*.ogg']:
-            summusic += len(glob.glob(destinationpath + '\\' + extension))
-        print(len(os.listdir(destinationpath)))
-        print(summusic)
+            sum_music += len(glob.glob(destination_path + '\\' + extension))
 
-        if (len(os.listdir(destinationpath)) - summusic) == 0 and summusic > 0:
+        if (len(os.listdir(destination_path)) - sum_music) == 0 and sum_music > 0:
             showinfo('Previous Setting Detected', 'We detect that you have already used this software with this\n'
                                                   'destination folder and chose the setting :\n'
                                                   ' - \'No\'.\n'
                                                   'To avoid duplicates, we recommend you to choose the same setting.')
-        elif len(os.listdir(destinationpath)) > 0 and summusic == 0:
+        elif len(os.listdir(destination_path)) > 0 and sum_music == 0:
             showinfo('Previous Setting Detected', 'We detect that you have already used this software with this\n'
                                                   'destination folder and chose the setting :\n'
                                                   ' - \'Yes for all\'.\n'
                                                   'To avoid duplicates, we recommend you to choose the same setting.')
-        elif (len(os.listdir(destinationpath)) - summusic) > 0 and summusic > 0:
-            minnbmusic = 10000
-            destinationfiles = []
+        elif (len(os.listdir(destination_path)) - sum_music) > 0 and sum_music > 0:
+            min_nb_music = 10000
+            destination_files = []
             for extension in ['*.mp3', '*.ogg']:
-                for element in glob.glob(destinationpath + '\\' + extension):
-                    destinationfiles.append(element)
-            for path in glob.glob(destinationpath + '\\*'):
-                if (path not in destinationfiles) and ((len(glob.glob(path + "\\*"))) < minnbmusic):
-                    minnbmusic = len(glob.glob(path + '\\*'))
+                for element in glob.glob(destination_path + '\\' + extension):
+                    destination_files.append(element)
+            for path in glob.glob(destination_path + '\\*'):
+                if (path not in destination_files) and ((len(glob.glob(path + "\\*"))) < min_nb_music):
+                    min_nb_music = len(glob.glob(path + '\\*'))
             showinfo('Previous Setting Detected', 'We detect that you have already used this software with this\n'
                                                   'destination folder and chose the setting :\n'
-                                                  ' - \'Yes but only from ' + str(minnbmusic) + ' occurrence(s)\'.\n'
+                                                  ' - \'Yes but only from ' + str(min_nb_music) + ' occurrence(s)\'.\n'
                                                   'To avoid duplicates, we recommend you to choose the same setting.')
         else:
             pass
@@ -284,164 +293,164 @@ class Function:
     @staticmethod
     def browse_to_artist():
         # Avoid folder errors
-        if len(browsetext1.get()) == 0 and len(browsetext2.get()) == 0:
+        if len(browse_text1.get()) == 0 and len(browse_text2.get()) == 0:
             showwarning("ErrorEmptyFields", "You have to enter osu! and destination folder !")
             return None
-        if len(browsetext2.get()) == 0:
+        if len(browse_text2.get()) == 0:
             showwarning("ErrorEmptyDestination", "You have to enter a destination folder !")
             return None
         if (os.path.exists(source + "\\Songs") is not True) or (len(os.listdir(source + "\\Songs")) == 0):
             showwarning("ErrorOsuNotFound", "You must enter a valid osu! folder !")
             return None
-        if os.path.exists(browsetext2.get()) is not True:
+        if os.path.exists(browse_text2.get()) is not True:
             showwarning("ErrorDestinationNotValid", "You must enter a valid destination folder !")
             return None
-        if browsetext1.get() == browsetext2.get():
+        if browse_text1.get() == browse_text2.get():
             showwarning("ErrorSamePaths", "You must enter a different folders !")
             return None
 
         # Get all artist AND make all artist in lowercase to avoid case issues
-        global artistlist
-        artistlistlower = []
-        artistlist = []
-        notallowed = []
-        dirlist = os.listdir(source + "\\Songs")
+        global artist_list
+        artist_list_lower = []
+        artist_list = []
+        not_allowed = []
+        dir_list = os.listdir(source + "\\Songs")
         #   Work only on osu folder (avoid issues with "tutorial" and co)
         regex = re.compile(r"^[\d]+[\s](.)+-(.)+")
-        for element in dirlist:
+        for element in dir_list:
             if regex.search(element) is not None:
                 pass
             else:
-                notallowed.append(element)
-        for element in notallowed:
-            dirlist.remove(element)
+                not_allowed.append(element)
+        for element in not_allowed:
+            dir_list.remove(element)
 
         #  Get all artist AND make all artist (with duplicates) in lowercase to avoid case issues
         #  AND
         #  Get all file music name like "artist - music name"
-        for element in dirlist:
-            namefolder = element.split()
-            del namefolder[0]
-            artistlistlower.append((" ".join(namefolder).split(" - ")[0]).lower())
-            artistlist.append((" ".join(namefolder).split(" - ")[0]))
-            artistmusic.append(" ".join(namefolder))
+        for element in dir_list:
+            name_folder = element.split()
+            del name_folder[0]
+            artist_list_lower.append((" ".join(name_folder).split(" - ")[0]).lower())
+            artist_list.append((" ".join(name_folder).split(" - ")[0]))
+            artist_music.append(" ".join(name_folder))
 
-        #  Count max occurence of artist and make artist list
-        global artistdic, nbartistsmax
-        artistdic = Counter(artistlistlower)
+        #  Count max occurrence of artist and make artist list
+        global artist_dic, nb_artists_max
+        artist_dic = Counter(artist_list_lower)
         try:
-            nbartistsmax = artistdic[max(artistdic, key=artistdic.get)]
+            nb_artists_max = artist_dic[max(artist_dic, key=artist_dic.get)]
         except ValueError:
             showwarning("ErrorOsuNotFound", "You must enter a valid osu! folder !")
             return None
         gui.artist_choice()
 
     @staticmethod
-    def artist_to_script():  # Called by Artist_window()
+    def artist_to_script(spin_box_number):  # Called by Artist_window()
 
         # Check if at least one option is chosen
-        if radiovalue.get() == 0:
+        if radio_value.get() == 0:
             showwarning("ErrorNothingSelected", "You have to choose one option")
             return None
 
         # Radio button choice path
         #  Do nothing with artist
-        if radiovalue.get() == 1:
+        if radio_value.get() == 1:
             func.remove_garbage()
 
         #   Create folder for each artist
-        elif radiovalue.get() == 2:
-            for artist in set(artistlist):
+        elif radio_value.get() == 2:
+            for artist in set(artist_list):
                 #   Exception to avoid case problem again (like "lisa" and "LiSa")
                 try:
-                    os.mkdir(destinationpath + '\\' + str(artist.lower().capitalize()))
-                    artistfolder.append(artist.lower().capitalize())
+                    os.mkdir(destination_path + '\\' + str(artist.lower().capitalize()))
+                    artist_folder.append(artist.lower().capitalize())
                 except FileExistsError:
                     pass
             func.remove_garbage()
 
         #   Create folder from given value
-        elif radiovalue.get() == 3:
+        elif radio_value.get() == 3:
             # Check if spin number is valuable
             try:
-                int(spinbox.get())
-                if int(spinbox.get()) < 1 or int(spinbox.get()) > nbartistsmax:
-                    showwarning("ErrorSpinNumber", "You have to choose a number between 1 and " + str(nbartistsmax))
+                int(spin_box_number)
+                if int(spin_box_number) < 1 or int(spin_box_number) > nb_artists_max:
+                    showwarning("ErrorSpinNumber", "You have to choose a number between 1 and " + str(nb_artists_max))
                     return None
             except ValueError:
-                showwarning("ErrorSpinNumber", "You have to choose a number between 1 and " + str(nbartistsmax))
+                showwarning("ErrorSpinNumber", "You have to choose a number between 1 and " + str(nb_artists_max))
                 return None
 
-            for artist in set(artistlist):
-                if artistdic.get(artist.lower()) >= int(spinbox.get()):
+            for artist in set(artist_list):
+                if artist_dic.get(artist.lower()) >= int(spin_box_number):
                     #   Exception to avoid case problem again (like "lisa" and "LiSa")
                     try:
-                        os.mkdir(destinationpath + '\\' + str(artist.lower().capitalize()))
-                        artistfolder.append(artist.lower().capitalize())
+                        os.mkdir(destination_path + '\\' + str(artist.lower().title()))
+                        artist_folder.append(artist.lower().title())
                     except FileExistsError:
                         pass
             func.remove_garbage()
 
         #   Manual selection
-        elif radiovalue.get() == 4:
+        elif radio_value.get() == 4:
             showinfo("Coming Soon !", "This function will be implemented soon !")
             return None
 
     @staticmethod
-    def mkdir_copy_rename():  # Check if file not already present and if not copy and rename it
-        artistlowercapitalize = artistlist[counter].lower().capitalize()
-        fileextension = globsearch.split(".")[-1]
-        # Search if there is folder with artistmusic's artist name, if not just copy it a folderpath root
-        if artistlowercapitalize in artistfolder:
-            if os.path.exists(destinationpath + "\\" + artistlowercapitalize + "\\"
-                              + artistmusic[counter] + "." + fileextension) is not True:
-                shutil.copy(globsearch,
-                            destinationpath + "\\" + artistlowercapitalize)
-                os.rename(destinationpath + "\\" + artistlowercapitalize + "\\" + globsearch.split("\\")[-1],
-                          destinationpath + "\\" + artistlowercapitalize + "\\"
-                          + artistmusic[counter] + "." + fileextension)
+    def copy_rename():  # Check if file not already present and if not copy and rename it
+        artist_lower_title = artist_list[counter].lower().title()
+        file_extension = glob_search.split(".")[-1]
+        # Search if there is folder with artist_music's artist name, if not just copy it a folder_path root
+        if artist_lower_title in artist_folder:
+            if os.path.exists(destination_path + "\\" + artist_lower_title + "\\"
+                              + artist_music[counter] + "." + file_extension) is not True:
+                shutil.copy(glob_search,
+                            destination_path + "\\" + artist_lower_title)
+                os.rename(destination_path + "\\" + artist_lower_title + "\\" + glob_search.split("\\")[-1],
+                          destination_path + "\\" + artist_lower_title + "\\"
+                          + artist_music[counter] + "." + file_extension)
 
         else:
-            if os.path.exists(destinationpath + "\\" + artistmusic[counter] + "." + fileextension) is not True:
-                shutil.copy(globsearch,
-                            destinationpath)
-                os.rename(destinationpath + "\\" + globsearch.split("\\")[-1],
-                          destinationpath + "\\" + artistmusic[counter] + "." + fileextension)
+            if os.path.exists(destination_path + "\\" + artist_music[counter] + "." + file_extension) is not True:
+                shutil.copy(glob_search,
+                            destination_path)
+                os.rename(destination_path + "\\" + glob_search.split("\\")[-1],
+                          destination_path + "\\" + artist_music[counter] + "." + file_extension)
 
     @staticmethod
     def avoid_duplicates():
         flag = False
-        for element in os.listdir(destinationpath):
+        for element in os.listdir(destination_path):
             try:
-                for file in os.listdir(destinationpath + '\\' + element):
-                    if file.lower() == (artistmusic[counter].lower() + '.' + file.lower().split('.')[-1]):
+                for file in os.listdir(destination_path + '\\' + element):
+                    if file.lower() == (artist_music[counter].lower() + '.' + file.lower().split('.')[-1]):
                         flag = True
                         break
                     else:
                         pass
             except NotADirectoryError:
-                if element.lower() == (artistmusic[counter].lower() + '.' + element.lower().split('.')[-1]):
+                if element.lower() == (artist_music[counter].lower() + '.' + element.lower().split('.')[-1]):
                     flag = True
                     break
                 else:
                     pass
         if flag is False:
-            func.mkdir_copy_rename()
+            func.copy_rename()
 
     @staticmethod
     def script_to_end():
-        for namefoldersrc in os.listdir(source + "\\Songs\\"):
-            namefoldersrcmod = namefoldersrc.replace("-BRACKET1-", "[").replace("-BRACKET2-", "]")
-            if namefoldersrc != namefoldersrcmod:
-                os.rename(source + "\\Songs\\" + namefoldersrc, source + "\\Songs\\" + namefoldersrcmod)
+        for name_folder_src in os.listdir(source + "\\Songs\\"):
+            name_folder_src_mod = name_folder_src.replace("-BRACKET1-", "[").replace("-BRACKET2-", "]")
+            if name_folder_src != name_folder_src_mod:
+                os.rename(source + "\\Songs\\" + name_folder_src, source + "\\Songs\\" + name_folder_src_mod)
 
-        for element in os.listdir(destinationpath):
+        for element in os.listdir(destination_path):
             if element.split('.')[-1] == "mp3" or element.split('.')[-1] == "ogg" \
                     or element.split('.')[-1] == "MP3" or element.split('.')[-1] == "OGG":
                 pass
             else:
-                if len(os.listdir(destinationpath + '\\' + element)) == 0:
-                    shutil.rmtree(destinationpath + '\\' + element, ignore_errors=True)
+                if len(os.listdir(destination_path + '\\' + element)) == 0:
+                    shutil.rmtree(destination_path + '\\' + element, ignore_errors=True)
         gui.end()
 
 
@@ -450,71 +459,71 @@ def script():
     for widget in root.winfo_children():
         widget.destroy()
     loading = StringVar()
-    moutainframe = Frame(root, relief=FLAT)
-    trainframe = Frame(root, relief=FLAT)
-    cloudart = Label(moutainframe, text=cloud_text, font='bold')
-    textart = Label(moutainframe, font='bold', textvariable=loading)
-    moutainart = Label(moutainframe, text=mountain_text, font='bold', anchor='s')
-    trainart = Label(trainframe, text=train_text, font='bold')
-    railart = Label(trainframe, text=rail_text, font='bold')
+    mountain_frame = Frame(root, relief=FLAT)
+    train_frame = Frame(root, relief=FLAT)
+    cloud_art = Label(mountain_frame, text=cloud_text, font='bold')
+    text_art = Label(mountain_frame, font='bold', textvariable=loading)
+    mountain_art = Label(mountain_frame, text=mountain_text, font='bold', anchor='s')
+    train_art = Label(train_frame, text=train_text, font='bold')
+    rail_art = Label(train_frame, text=rail_text, font='bold')
 
     # Configuration
-    cloudart.configure(font=("Courier", 4))
-    textart.configure(font=("Courier", 9))
-    moutainart.configure(font=("Courier", 8))
-    trainart.configure(font=("Courier", 5))
-    railart.configure(font=("Courier", 7))
+    cloud_art.configure(font=("Courier", 4))
+    text_art.configure(font=("Courier", 9))
+    mountain_art.configure(font=("Courier", 8))
+    train_art.configure(font=("Courier", 5))
+    rail_art.configure(font=("Courier", 7))
 
     # Pack
-    moutainframe.pack(fill=BOTH, expand=TRUE, side=TOP)
-    trainframe.pack(fill=BOTH, expand=TRUE, side=BOTTOM)
-    cloudart.pack(side=TOP)
-    moutainart.pack(side=BOTTOM)
-    railart.pack(side=BOTTOM)
+    mountain_frame.pack(fill=BOTH, expand=TRUE, side=TOP)
+    train_frame.pack(fill=BOTH, expand=TRUE, side=BOTTOM)
+    cloud_art.pack(side=TOP)
+    mountain_art.pack(side=BOTTOM)
+    rail_art.pack(side=BOTTOM)
 
-    global counter, globsearch
+    global counter, glob_search
     # SCRIPTING PART
     counter = 0
-    notallowed = []
-    listdir = glob.glob(source + "\\Songs\\*")
+    not_allowed = []
+    list_dir = glob.glob(source + "\\Songs\\*")
 
     #   Work only on osu folder (avoid issues with "tutorial" and co)
     regex = re.compile(r"^([0-9])+[\s](.)+")
-    for element in listdir:
+    for element in list_dir:
         if regex.search(element.split('\\')[-1]) is not None:
             pass
         else:
-            notallowed.append(element)
-    for element in notallowed:
-        listdir.remove(element)
+            not_allowed.append(element)
+    for element in not_allowed:
+        list_dir.remove(element)
 
-    for element in listdir:
-        percent = int((counter/len(listdir))*100 + 0.5)
+    for element in list_dir:
+        percent = int(map((counter/len(list_dir))*100))
         for extension in ["*.mp3", "*.ogg", "*.m4a", ".mp3", ".ogg", ".m4a"]:
             if len(glob.glob(element + "\\" + extension)) == 0:
                 pass
             else:
-                globsearch = glob.glob(element + "\\" + extension)[0]
+                glob_search = glob.glob(element + "\\" + extension)[0]
                 func.avoid_duplicates()
                 break
 
         counter += 1
 
         # TRAIN MOVEMENT
-        varint = ((326*counter)/len(listdir))
-        if ((326*counter)/len(listdir)) <= 163:
-            trainart.pack(side=LEFT, padx=varint)
+        var_int = ((326*counter)/len(list_dir))
+        if ((326*counter)/len(list_dir)) <= 163:
+            train_art.pack(side=LEFT, padx=var_int)
         else:
-            trainart.pack(side=RIGHT, padx=326-varint)
+            train_art.pack(side=RIGHT, padx=326-var_int)
 
-        # PRINTING INFORMATIONQ
+        # PRINTING INFORMATION
         loading.set(" ______________________________________________________________\n"
                     "|                                                              |\n"
                     "|              Script in progress : " + str(counter) + "/"
-                    + str(len(listdir)) + " (" + str(percent) + "%)"
-                    + " " * (22 - (len(str(counter)) + len(str(len(listdir))) + len(str(percent)))) + "|\n"
+                    + str(len(list_dir)) + " (" + str(percent) + "%)"
+                    + " " * (22 - (len(str(counter)) + len(str(len(list_dir))) + len(str(percent)))) + "|\n"
                     "|______________________________________________________________|")
-        textart.pack(side=TOP)
+        text_art.pack(side=TOP)
         root.update()
     func.script_to_end()
 
