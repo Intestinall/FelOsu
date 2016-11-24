@@ -498,7 +498,7 @@ def script():
         list_dir.remove(element)
 
     for element in list_dir:
-        percent = int(map((counter/len(list_dir))*100))
+        percent = int(round((counter/len(list_dir))*100))
         for extension in ["*.mp3", "*.ogg", "*.m4a", ".mp3", ".ogg", ".m4a"]:
             if len(glob.glob(element + "\\" + extension)) == 0:
                 pass
