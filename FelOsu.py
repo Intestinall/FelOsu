@@ -438,19 +438,18 @@ class Function:
             if name_folder_src != name_folder_src_mod:
                 os.rename(source + "\\Songs\\" + name_folder_src, source + "\\Songs\\" + name_folder_src_mod)
 
+        # Bug 775
+        for file in next(os.walk(destination_path))[2]:
+            if artist_dic.get(file.replace("-BRACKET1-", "[").replace("-BRACKET2-", "]").split(' - ')[0].lower()) \
+                    >= int_spin_box_number:
+                shutil.move(destination_path + '\\' + file, destination_path + '\\'
+                            + file.split(' - ')[0].lower().title() + '\\' + file)
+
         # Check if number of file in directories < int_spin_box_number
         for directory in next(os.walk(destination_path))[1]:
             if len(os.listdir(destination_path + '\\' + directory)) < int_spin_box_number:
                 for file in os.listdir(destination_path + '\\' + directory):
                     shutil.move(destination_path + '\\' + directory + '\\' + file, destination_path + '\\' + file)
-
-        # Bug 775
-        for file in next(os.walk(destination_path))[2]:
-            if artist_dic.get(
-                    file.replace("-BRACKET1-", "[").replace("-BRACKET2-", "]").split(' - ')[0].lower()) \
-                    >= int_spin_box_number and file.split(' - ')[0].lower() in artist_folder:
-                shutil.move(destination_path + '\\' + file, destination_path + '\\'
-                            + file.split(' - ')[0].lower().title() + '\\' + file)
 
         # Remove directories with 0 files
         for element in os.listdir(destination_path):
