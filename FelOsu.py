@@ -10,7 +10,7 @@ import webbrowser
 
 # glob_search = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods\\Lost Woods.mp3"
 # list_dir = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods"
-# dir_list = "10029 Koji Kondo - Lost Woods"
+# osu_directories_list = "10029 Koji Kondo - Lost Woods"
 # artist_music = "Koji Kondo - Lost Woods"
 # artist_list = "Koji Kondo"
 # artist_list_lower = "koji kondo"
@@ -37,8 +37,8 @@ license_text = '''        This program is free software: you can redistribute it
 
 help_text = '''
 
-         - "Yes" will put all the musics with the same artist in the same folder (and the name's folder
-         will be the artist's name). But even if there is only music for one artist, it will put it
+         - "Yes" will put all the musics with the same artist in the same folder (and the folder's name
+         will be the artist's name). But even if there is only one music for an artist, it will put it
          in a folder despite everything.
 
          - "Yes, but only from" is exactly the same except the fact that you set the number of musics
@@ -102,6 +102,7 @@ artist_folder = []
 browse_text1 = StringVar()
 browse_text2 = StringVar()
 radio_value = IntVar()
+spin_var = IntVar()
 
 ICON = (b'\x00\x00\x01\x00\x01\x00\x10\x10\x00\x00\x01\x00\x08\x00h\x05\x00\x00'
         b'\x16\x00\x00\x00(\x00\x00\x00\x10\x00\x00\x00 \x00\x00\x00\x01\x00'
@@ -124,9 +125,13 @@ class GraphicalUserInterface:
     @staticmethod
     def exit_func():
         if askyesno("Exit", "Do you want to quit? "):
-            root.quit()
-            root.destroy()
-            sys.exit(0)
+            try:
+                func.script_to_end()
+                root.quit()
+                sys.exit(0)
+            except:
+                root.quit()
+                sys.exit(0)
 
     @staticmethod
     def licence():
@@ -134,8 +139,8 @@ class GraphicalUserInterface:
             widget.destroy()
         frame1 = tk.Frame(root, borderwidth=5, relief=RAISED)
         frame2 = tk.Frame(frame1, borderwidth=5, relief=SUNKEN)
-        frame1.pack(pady=10, padx=5)
-        frame2.pack(pady=15, padx=15)
+        frame1.pack(pady=13, padx=5)
+        frame2.pack(pady=12, padx=12)
         tk.Label(frame2, text=license_text, bg='white').pack(padx=1, pady=2)
         Button(root, text="Exit", command=gui.exit_func, width=10).pack(side=RIGHT, padx=12, pady=15)
         Button(root, text="Next >", command=gui.browse, width=10).pack(side=RIGHT, pady=15)
@@ -176,7 +181,7 @@ class GraphicalUserInterface:
     def artist_choice():
         for widget in root.winfo_children():
             widget.destroy()
-        global radio_value
+        global radio_value, spinbox
         frame_browse_window_text = Frame(root, relief=GROOVE)
         frame_browse_window1 = Frame(root, relief=FLAT)
         frame_browse_window2 = Frame(root, relief=FLAT)
@@ -195,7 +200,7 @@ class GraphicalUserInterface:
         button4 = Radiobutton(frame_browse_window4, text="Yes, but only some artist I want to choose",
                               variable=radio_value, value=4)
         button1.pack(side=LEFT), button2.pack(side=LEFT), button3.pack(side=LEFT), button4.pack(side=LEFT)
-        spinbox = Spinbox(frame_browse_window3, from_=1, to=nb_artists_max, width=8, textvariable=1)
+        spinbox = Spinbox(frame_browse_window3, from_=1, to=nb_artists_max, width=8, textvariable=spin_var)
         spinbox.pack(side=LEFT)
         Label(frame_browse_window3, text=" max = " + str(nb_artists_max)).pack(side=LEFT, padx=5)
         Button(root, text="Help", command=gui.help_me, width=10).pack(side=LEFT, padx=12, pady=20)
@@ -228,7 +233,7 @@ Click the link below to see if an update is available :
 
 class Function:
     @staticmethod
-    def callback():
+    def callback(event):
         webbrowser.open_new(r"https://osu.ppy.sh/forum/t/520493")
 
     @staticmethod
@@ -249,8 +254,7 @@ class Function:
 
     @staticmethod
     def remove_garbage():  # Replace all bracket to avoid glob.glob empty list issue
-        list_dir_base = glob.glob(source + "\\Songs\\*")
-        for element in list_dir_base:
+        for element in glob.glob(source + "\\Songs\\*"):
             new_path_name = element.replace("[", "-BRACKET1-").replace("]", "-BRACKET2-")
             if new_path_name != element:  # If there not same, remove "[" and "]" to avoid glob.glob bug (list empty)
                 os.rename(element, new_path_name)
@@ -260,32 +264,28 @@ class Function:
 
     @staticmethod
     def detect_choice():
-        sum_music = 0
-        for extension in ['*.mp3', '*.ogg']:
-            sum_music += len(glob.glob(destination_path + '\\' + extension))
+        global min_nb_occurrences
+        directory_number = len(next(os.walk(destination_path))[1])
+        file_number = len(next(os.walk(destination_path))[2])
 
-        if (len(os.listdir(destination_path)) - sum_music) == 0 and sum_music > 0:
+        if directory_number == 0 and file_number > 0:
             showinfo('Previous Setting Detected', 'We detect that you have already used this software with this\n'
                                                   'destination folder and chose the setting :\n'
                                                   ' - \'No\'.\n'
                                                   'To avoid duplicates, we recommend you to choose the same setting.')
-        elif len(os.listdir(destination_path)) > 0 and sum_music == 0:
+        elif directory_number > 0 and file_number == 0:
             showinfo('Previous Setting Detected', 'We detect that you have already used this software with this\n'
                                                   'destination folder and chose the setting :\n'
                                                   ' - \'Yes for all\'.\n'
                                                   'To avoid duplicates, we recommend you to choose the same setting.')
-        elif (len(os.listdir(destination_path)) - sum_music) > 0 and sum_music > 0:
-            min_nb_music = 10000
-            destination_files = []
-            for extension in ['*.mp3', '*.ogg']:
-                for element in glob.glob(destination_path + '\\' + extension):
-                    destination_files.append(element)
-            for path in glob.glob(destination_path + '\\*'):
-                if (path not in destination_files) and ((len(glob.glob(path + "\\*"))) < min_nb_music):
-                    min_nb_music = len(glob.glob(path + '\\*'))
+        elif directory_number > 0 and file_number > 0:
+            min_nb_occurrences = min([len(glob.glob(destination_path + '\\' + directories + '\\*')) for directories in
+                                      next(os.walk(destination_path))[1]])
+            spin_var.set(min_nb_occurrences)
             showinfo('Previous Setting Detected', 'We detect that you have already used this software with this\n'
                                                   'destination folder and chose the setting :\n'
-                                                  ' - \'Yes but only from ' + str(min_nb_music) + ' occurrence(s)\'.\n'
+                                                  ' - \'Yes but only from ' + str(min_nb_occurrences) +
+                                                  ' occurrence(s)\'.\n'
                                                   'To avoid duplicates, we recommend you to choose the same setting.')
         else:
             pass
@@ -313,22 +313,15 @@ class Function:
         global artist_list
         artist_list_lower = []
         artist_list = []
-        not_allowed = []
-        dir_list = os.listdir(source + "\\Songs")
+
         #   Work only on osu folder (avoid issues with "tutorial" and co)
         regex = re.compile(r"^[\d]+[\s](.)+-(.)+")
-        for element in dir_list:
-            if regex.search(element) is not None:
-                pass
-            else:
-                not_allowed.append(element)
-        for element in not_allowed:
-            dir_list.remove(element)
+        osu_directories_list = [x for x in os.listdir(source + "\\Songs") if regex.search(x) is not None]
 
         #  Get all artist AND make all artist (with duplicates) in lowercase to avoid case issues
         #  AND
         #  Get all file music name like "artist - music name"
-        for element in dir_list:
+        for element in osu_directories_list:
             name_folder = element.split()
             del name_folder[0]
             artist_list_lower.append((" ".join(name_folder).split(" - ")[0]).lower())
@@ -347,6 +340,8 @@ class Function:
 
     @staticmethod
     def artist_to_script(spin_box_number):  # Called by Artist_window()
+        global int_spin_box_number
+        int_spin_box_number = int(spin_box_number)
 
         # Check if at least one option is chosen
         if radio_value.get() == 0:
@@ -363,8 +358,8 @@ class Function:
             for artist in set(artist_list):
                 #   Exception to avoid case problem again (like "lisa" and "LiSa")
                 try:
-                    os.mkdir(destination_path + '\\' + str(artist.lower().capitalize()))
-                    artist_folder.append(artist.lower().capitalize())
+                    os.mkdir(destination_path + '\\' + str(artist.lower().title()))
+                    artist_folder.append(artist.lower().title())
                 except FileExistsError:
                     pass
             func.remove_garbage()
@@ -384,11 +379,9 @@ class Function:
             for artist in set(artist_list):
                 if artist_dic.get(artist.lower()) >= int(spin_box_number):
                     #   Exception to avoid case problem again (like "lisa" and "LiSa")
-                    try:
-                        os.mkdir(destination_path + '\\' + str(artist.lower().title()))
-                        artist_folder.append(artist.lower().title())
-                    except FileExistsError:
-                        pass
+                    os.makedirs(destination_path + '\\' + str(artist.lower().title()), exist_ok=True)
+                    artist_folder.append(artist.lower().title())
+
             func.remove_garbage()
 
         #   Manual selection
@@ -398,7 +391,7 @@ class Function:
 
     @staticmethod
     def copy_rename():  # Check if file not already present and if not copy and rename it
-        artist_lower_title = artist_list[counter].lower().title()
+        artist_lower_title = artist_list[counter].lower().title().replace("-BRACKET1-", "[").replace("-BRACKET2-", "]")
         file_extension = glob_search.split(".")[-1]
         # Search if there is folder with artist_music's artist name, if not just copy it a folder_path root
         if artist_lower_title in artist_folder:
@@ -439,11 +432,27 @@ class Function:
 
     @staticmethod
     def script_to_end():
+        # Replace Bracket
         for name_folder_src in os.listdir(source + "\\Songs\\"):
             name_folder_src_mod = name_folder_src.replace("-BRACKET1-", "[").replace("-BRACKET2-", "]")
             if name_folder_src != name_folder_src_mod:
                 os.rename(source + "\\Songs\\" + name_folder_src, source + "\\Songs\\" + name_folder_src_mod)
 
+        # Check if number of file in directories < int_spin_box_number
+        for directory in next(os.walk(destination_path))[1]:
+            if len(os.listdir(destination_path + '\\' + directory)) < int_spin_box_number:
+                for file in os.listdir(destination_path + '\\' + directory):
+                    shutil.move(destination_path + '\\' + directory + '\\' + file, destination_path + '\\' + file)
+
+        # Bug 775
+        for file in next(os.walk(destination_path))[2]:
+            if artist_dic.get(
+                    file.replace("-BRACKET1-", "[").replace("-BRACKET2-", "]").split(' - ')[0].lower()) \
+                    >= int_spin_box_number and file.split(' - ')[0].lower() in artist_folder:
+                shutil.move(destination_path + '\\' + file, destination_path + '\\'
+                            + file.split(' - ')[0].lower().title() + '\\' + file)
+
+        # Remove directories with 0 files
         for element in os.listdir(destination_path):
             if element.split('.')[-1] == "mp3" or element.split('.')[-1] == "ogg" \
                     or element.split('.')[-1] == "MP3" or element.split('.')[-1] == "OGG":
@@ -451,6 +460,7 @@ class Function:
             else:
                 if len(os.listdir(destination_path + '\\' + element)) == 0:
                     shutil.rmtree(destination_path + '\\' + element, ignore_errors=True)
+
         gui.end()
 
 
