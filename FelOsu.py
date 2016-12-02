@@ -7,6 +7,7 @@ from tkinter.messagebox import askyesno, showinfo, showwarning
 from tkinter.ttk import *
 import tkinter as tk
 import webbrowser
+import urllib.request
 
 # music_file_path = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods\\Lost Woods.mp3"
 # list_dir = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods"
@@ -142,6 +143,10 @@ class GraphicalUserInterface:
         Button(root, text="Exit", command=gui.exit_func, width=10).pack(side=RIGHT, padx=12, pady=15)
         Button(root, text="Next >", command=gui.browse, width=10).pack(side=RIGHT, pady=15)
         root.protocol("WM_DELETE_WINDOW", gui.exit_func)
+        if "00000000001300" not in urllib.request.urlopen("https://osu.ppy.sh/forum/t/520493").read().decode("utf-8"):
+            if askyesno("Update Available !", "An update is available,\ndo you want to download it ?"):
+                webbrowser.open("https://osu.ppy.sh/forum/t/520493")
+
 
     @staticmethod
     def browse():
@@ -214,7 +219,7 @@ class GraphicalUserInterface:
 If you have suggestion(s) or bug(s), you can send an email at :
 software.felosu@gmail.com
 
-Click the link below to see if an update is available :
+Click the link below to see changelog :
 """)
         Button(root, text="Exit", command=lambda: sys.exit(0), width=10).pack(side=BOTTOM, padx=12, pady=20)
         text.configure(font=("Courier", 9))
