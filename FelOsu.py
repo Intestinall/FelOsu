@@ -1,23 +1,22 @@
-import glob
-import shutil
+from shutil import rmtree, copy, move
 import tempfile
+from glob import glob
 from collections import Counter
 from tkinter.filedialog import *
-from tkinter.messagebox import *
+from tkinter.messagebox import askyesno, showinfo, showwarning
 from tkinter.ttk import *
 import tkinter as tk
 import webbrowser
 
-# glob_search = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods\\Lost Woods.mp3"
+# music_file_path = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods\\Lost Woods.mp3"
 # list_dir = "C:/Users/BW5442/Downloads/FelOsu\\Songs\\10029 Koji Kondo - Lost Woods"
-# osu_directories_list = "10029 Koji Kondo - Lost Woods"
 # artist_music = "Koji Kondo - Lost Woods"
 # artist_list = "Koji Kondo"
 # artist_list_lower = "koji kondo"
 # artist_dic = " 'nano': 9 "
 # folder_path = "C:/Users/BW5442/Downloads/FelOsu/Nouveau dossier"
 
-license_text = '''        This program is free software: you can redistribute it and/or modify
+license_text = """        This program is free software: you can redistribute it and/or modify
         it under the terms of the GNU General Public License as published by
         the Free Software Foundation, either version 3 of the License, or
         (at your option) any later version.
@@ -33,9 +32,9 @@ license_text = '''        This program is free software: you can redistribute it
         You have to mention "Based on Darkaird work" if you reuse this software.
 
         By clicking "Next >" button, it means that you read those conditions
-        mentions above.'''
+        mentions above."""
 
-help_text = '''
+help_text = """
 
          - "Yes" will put all the musics with the same artist in the same folder (and the folder's name
          will be the artist's name). But even if there is only one music for an artist, it will put it
@@ -43,21 +42,20 @@ help_text = '''
 
          - "Yes, but only from" is exactly the same except the fact that you set the number of musics
           of a same artist from which it will create a folder.
+"""
 
-         - "Yes, but only artist(s) I choose" will : COMING SOON !'''
-
-train_text = '''
+train_text = """
      ___                     _          ___
     | __|       ___         | |        / _ \        ___      _  _
     | _|       / -_)        | |       | (_) |      (_-<     | +| |      . . . o o
   __|_|____  __\___|___  ___|_|_     __\___/__  ___/__/___  _\_,_|_             o
  |[] [] []| [] [] [] [] [_____(__   |[] [] []| [] [] [] [] [_____(__  ][]]_n_n__][.
  |________|_[_________]_[________]__|________|_[_________]_[________]_|__|________)<
-  oo    oo 'oo      oo ' oo    oo '  oo    oo 'oo      oo ' oo    oo 'oo 0000---oo\_'''
+  oo    oo 'oo      oo ' oo    oo '  oo    oo 'oo      oo ' oo    oo 'oo 0000---oo\_"""
 
-rail_text = '#' * 135
+rail_text = "#" * 135
 
-cloud_text = '''
+cloud_text = """
 _                  _                                              _                                                    \
      _                                            _
  ))              (`  ).                   _                     (`  ).                   _                             \
@@ -80,9 +78,9 @@ ___.-'  (_.'          .')                    `(    )  ))         (_.'          .
 (_.'                                     `(    )  ))       (_.'
                   (_  )                     ` __.:'                        (_  )                  ` __.:'              \
                                                           ` __.:'
-                  '''
+                  """
 
-mountain_text = '''
+mountain_text = """
                              ^    _                                _     ^
   ^            ^        .-.      / \        _                     / \        _           ^
             ^          /   \    /^./\__   _/ \             ^     /^./\__   _/ \\
@@ -93,11 +91,10 @@ mountain_text = '''
       /    \/  \  _/  \-' __/.' ^ _   \_   .'\   _/ \ .  __/ \   ' ^ _   \_   .'\   _/  \\
     /\  .-   `. \/     \ / -.   _/ \ -. `_/   \ /    `._/  ^  \    _/ \ -. `_/   \ /    `\\
  __/  `-.__ ^   / .-'.--'    . /    `--./ .-'  `-.  `-. `.  -  `. /    `--./ .-'  `-.  `-. \__
-/        `.  / /        `-.   /  .-'   / .    .'  \    \  \  -   /  .-'   / .   .'   \    \   \\'''
+/        `.  / /        `-.   /  .-'   / .    .'  \    \  \  -   /  .-'   / .   .'   \    \   \\"""
 
 
 root = tk.Tk()
-artist_music = []
 artist_folder = []
 browse_text1 = StringVar()
 browse_text2 = StringVar()
@@ -141,7 +138,7 @@ class GraphicalUserInterface:
         frame2 = tk.Frame(frame1, borderwidth=5, relief=SUNKEN)
         frame1.pack(pady=13, padx=5)
         frame2.pack(pady=12, padx=12)
-        tk.Label(frame2, text=license_text, bg='white').pack(padx=1, pady=2)
+        tk.Label(frame2, text=license_text, bg="white").pack(padx=1, pady=2)
         Button(root, text="Exit", command=gui.exit_func, width=10).pack(side=RIGHT, padx=12, pady=15)
         Button(root, text="Next >", command=gui.browse, width=10).pack(side=RIGHT, pady=15)
         root.protocol("WM_DELETE_WINDOW", gui.exit_func)
@@ -154,13 +151,13 @@ class GraphicalUserInterface:
         frame_browse_window_bottom = LabelFrame(root, text=" Destination folder ", relief=GROOVE)
         frame_browse_window_up.pack(side=TOP, padx=30, pady=8, fill="both", expand="yes")
         frame_browse_window_bottom.pack(side=TOP, padx=30, pady=5, fill="both", expand="yes")
-        Label(frame_browse_window_up, text="""\nPlease, indicate osu! folder""").pack(side=TOP)
+        Label(frame_browse_window_up, text="\nPlease, indicate osu! folder").pack(side=TOP)
         Button(frame_browse_window_up, text="Browse...",
                command=func.get_source, width=9).pack(side=RIGHT, padx=12, pady=20)
         entry1 = Entry(frame_browse_window_up, textvariable=browse_text1, width=70)
         entry1.pack(side=RIGHT, padx=15)
         Label(frame_browse_window_bottom,
-              text="""\nPlease, indicate the folder where you want the files to be copied in""").pack(side=TOP)
+              text="\nPlease, indicate the folder where you want the files to be copied in").pack(side=TOP)
         Button(frame_browse_window_bottom, text="Browse...", width=9,
                command=func.get_destination_path).pack(side=RIGHT, padx=12, pady=20)
         entry2 = Entry(frame_browse_window_bottom, textvariable=browse_text2, width=70)
@@ -181,25 +178,21 @@ class GraphicalUserInterface:
     def artist_choice():
         for widget in root.winfo_children():
             widget.destroy()
-        global radio_value, spinbox
+        global radio_value
         frame_browse_window_text = Frame(root, relief=GROOVE)
         frame_browse_window1 = Frame(root, relief=FLAT)
         frame_browse_window2 = Frame(root, relief=FLAT)
         frame_browse_window3 = Frame(root, relief=FLAT)
-        frame_browse_window4 = Frame(root, relief=FLAT)
         frame_browse_window_text.pack(padx=60, pady=50, fill="both", expand="yes")
         frame_browse_window1.pack(padx=60, pady=5, fill="both", expand="yes")
         frame_browse_window2.pack(padx=60, pady=5, fill="both", expand="yes")
         frame_browse_window3.pack(padx=60, pady=5, fill="both", expand="yes")
-        frame_browse_window4.pack(padx=60, pady=5, fill="both", expand="yes")
         Label(frame_browse_window_text, text="""
         Do you want to sort by artist ? For more precision, click "Help" in the bottom-left corner""").pack()
         button1 = Radiobutton(frame_browse_window1, text="No", variable=radio_value, value=1)
         button2 = Radiobutton(frame_browse_window2, text="Yes for all", variable=radio_value, value=2)
         button3 = Radiobutton(frame_browse_window3, text="Yes, but only from : ", variable=radio_value, value=3)
-        button4 = Radiobutton(frame_browse_window4, text="Yes, but only some artist I want to choose",
-                              variable=radio_value, value=4)
-        button1.pack(side=LEFT), button2.pack(side=LEFT), button3.pack(side=LEFT), button4.pack(side=LEFT)
+        button1.pack(side=LEFT), button2.pack(side=LEFT), button3.pack(side=LEFT)
         spinbox = Spinbox(frame_browse_window3, from_=1, to=nb_artists_max, width=8, textvariable=spin_var)
         spinbox.pack(side=LEFT)
         Label(frame_browse_window3, text=" max = " + str(nb_artists_max)).pack(side=LEFT, padx=5)
@@ -209,6 +202,7 @@ class GraphicalUserInterface:
             .pack(side=RIGHT, pady=20)
         Button(root, text="< Previous", command=gui.browse, width=10).pack(side=RIGHT, padx=12, pady=20)
         func.detect_choice()
+        func.pre_check_radio_button(button1, button2, button3)
 
     @staticmethod
     def end():
@@ -253,18 +247,8 @@ class Function:
         browse_text2.set(destination_path)
 
     @staticmethod
-    def remove_garbage():  # Replace all bracket to avoid glob.glob empty list issue
-        for element in glob.glob(source + "\\Songs\\*"):
-            new_path_name = element.replace("[", "-BRACKET1-").replace("]", "-BRACKET2-")
-            if new_path_name != element:  # If there not same, remove "[" and "]" to avoid glob.glob bug (list empty)
-                os.rename(element, new_path_name)
-            else:
-                pass
-        script()
-
-    @staticmethod
     def detect_choice():
-        global min_nb_occurrences
+        global min_nb_occurrences, pre_check
         directory_number = len(next(os.walk(destination_path))[1])
         file_number = len(next(os.walk(destination_path))[2])
 
@@ -273,13 +257,17 @@ class Function:
                                                   'destination folder and chose the setting :\n'
                                                   ' - \'No\'.\n'
                                                   'To avoid duplicates, we recommend you to choose the same setting.')
+            pre_check = 1
+
         elif directory_number > 0 and file_number == 0:
             showinfo('Previous Setting Detected', 'We detect that you have already used this software with this\n'
                                                   'destination folder and chose the setting :\n'
                                                   ' - \'Yes for all\'.\n'
                                                   'To avoid duplicates, we recommend you to choose the same setting.')
+            pre_check = 2
+
         elif directory_number > 0 and file_number > 0:
-            min_nb_occurrences = min([len(glob.glob(destination_path + '\\' + directories + '\\*')) for directories in
+            min_nb_occurrences = min([len(glob(destination_path + '\\' + directories + '\\*')) for directories in
                                       next(os.walk(destination_path))[1]])
             spin_var.set(min_nb_occurrences)
             showinfo('Previous Setting Detected', 'We detect that you have already used this software with this\n'
@@ -287,6 +275,20 @@ class Function:
                                                   ' - \'Yes but only from ' + str(min_nb_occurrences) +
                                                   ' occurrence(s)\'.\n'
                                                   'To avoid duplicates, we recommend you to choose the same setting.')
+            pre_check = 3
+
+        else:
+            pre_check = 0
+            pass
+
+    @staticmethod
+    def pre_check_radio_button(btn1, btn2, btn3):
+        if pre_check == 1:
+            btn1.invoke()
+        elif pre_check == 2:
+            btn2.invoke()
+        elif pre_check == 3:
+            btn3.invoke()
         else:
             pass
 
@@ -310,23 +312,18 @@ class Function:
             return None
 
         # Get all artist AND make all artist in lowercase to avoid case issues
-        global artist_list
-        artist_list_lower = []
-        artist_list = []
+        global artist_list, artist_music
 
         #   Work only on osu folder (avoid issues with "tutorial" and co)
         regex = re.compile(r"^[\d]+[\s](.)+-(.)+")
-        osu_directories_list = [x for x in os.listdir(source + "\\Songs") if regex.search(x) is not None]
 
         #  Get all artist AND make all artist (with duplicates) in lowercase to avoid case issues
         #  AND
         #  Get all file music name like "artist - music name"
-        for element in osu_directories_list:
-            name_folder = element.split()
-            del name_folder[0]
-            artist_list_lower.append((" ".join(name_folder).split(" - ")[0]).lower())
-            artist_list.append((" ".join(name_folder).split(" - ")[0]))
-            artist_music.append(" ".join(name_folder))
+        osu_directories_list = [x for x in os.listdir(source + "\\Songs") if regex.search(x) is not None]
+        artist_list_lower = [(" ".join(x.split()[1:])).split(" - ")[0].lower() for x in osu_directories_list]
+        artist_list = [(" ".join(x.split()[1:])).split(" - ")[0] for x in osu_directories_list]
+        artist_music = [(" ".join(x.split()[1:])) for x in osu_directories_list]
 
         #  Count max occurrence of artist and make artist list
         global artist_dic, nb_artists_max
@@ -351,7 +348,7 @@ class Function:
         # Radio button choice path
         #  Do nothing with artist
         if radio_value.get() == 1:
-            func.remove_garbage()
+            script()
 
         #   Create folder for each artist
         elif radio_value.get() == 2:
@@ -362,7 +359,7 @@ class Function:
                     artist_folder.append(artist.lower().title())
                 except FileExistsError:
                     pass
-            func.remove_garbage()
+            script()
 
         #   Create folder from given value
         elif radio_value.get() == 3:
@@ -382,83 +379,61 @@ class Function:
                     os.makedirs(destination_path + '\\' + str(artist.lower().title()), exist_ok=True)
                     artist_folder.append(artist.lower().title())
 
-            func.remove_garbage()
-
-        #   Manual selection
-        elif radio_value.get() == 4:
-            showinfo("Coming Soon !", "This function will be implemented soon !")
-            return None
+            script()
 
     @staticmethod
-    def copy_rename():  # Check if file not already present and if not copy and rename it
-        artist_lower_title = artist_list[counter].lower().title().replace("-BRACKET1-", "[").replace("-BRACKET2-", "]")
-        file_extension = glob_search.split(".")[-1]
+    def copy_rename(music_path, counter):  # Check if file not already present and if not copy and rename it
+        artist_lower_title = artist_list[counter].lower().title()
+        file_extension = music_path.split(".")[-1]
+        file_name = music_path.split("\\")[-1]
         # Search if there is folder with artist_music's artist name, if not just copy it a folder_path root
         if artist_lower_title in artist_folder:
-            if os.path.exists(destination_path + "\\" + artist_lower_title + "\\"
-                              + artist_music[counter] + "." + file_extension) is not True:
-                shutil.copy(glob_search,
-                            destination_path + "\\" + artist_lower_title)
-                os.rename(destination_path + "\\" + artist_lower_title + "\\" + glob_search.split("\\")[-1],
-                          destination_path + "\\" + artist_lower_title + "\\"
-                          + artist_music[counter] + "." + file_extension)
-
+            copy(music_path, destination_path + "\\" + artist_lower_title)
+            os.rename(destination_path + "\\" + artist_lower_title + "\\" + file_name,
+                      destination_path + "\\" + artist_lower_title + "\\"
+                      + artist_music[counter] + "." + file_extension)
         else:
-            if os.path.exists(destination_path + "\\" + artist_music[counter] + "." + file_extension) is not True:
-                shutil.copy(glob_search,
-                            destination_path)
-                os.rename(destination_path + "\\" + glob_search.split("\\")[-1],
-                          destination_path + "\\" + artist_music[counter] + "." + file_extension)
+            copy(music_path, destination_path)
+            os.rename(destination_path + "\\" + file_name,
+                      destination_path + "\\" + artist_music[counter] + "." + file_extension)
 
     @staticmethod
-    def avoid_duplicates():
-        flag = False
-        for element in os.listdir(destination_path):
-            try:
-                for file in os.listdir(destination_path + '\\' + element):
-                    if file.lower() == (artist_music[counter].lower() + '.' + file.lower().split('.')[-1]):
-                        flag = True
-                        break
-                    else:
-                        pass
-            except NotADirectoryError:
-                if element.lower() == (artist_music[counter].lower() + '.' + element.lower().split('.')[-1]):
-                    flag = True
-                    break
-                else:
-                    pass
-        if flag is False:
-            func.copy_rename()
+    def avoid_duplicates(counter):
+        for destination_file in next(os.walk(destination_path))[2]:
+            if destination_file.lower().startswith(artist_music[counter].lower() + '.'):
+                return True
+
+        for destination_directory in next(os.walk(destination_path))[1]:
+            for file in os.listdir(destination_path + '\\' + destination_directory):
+                if file.lower().startswith(artist_music[counter].lower() + '.'):
+                    return True
+
+        return False
 
     @staticmethod
     def script_to_end():
-        # Replace Bracket
-        for name_folder_src in os.listdir(source + "\\Songs\\"):
-            name_folder_src_mod = name_folder_src.replace("-BRACKET1-", "[").replace("-BRACKET2-", "]")
-            if name_folder_src != name_folder_src_mod:
-                os.rename(source + "\\Songs\\" + name_folder_src, source + "\\Songs\\" + name_folder_src_mod)
+        directory_path_view = next(os.walk(destination_path))
 
         # Bug 775
-        for file in next(os.walk(destination_path))[2]:
-            if artist_dic.get(file.replace("-BRACKET1-", "[").replace("-BRACKET2-", "]").split(' - ')[0].lower()) \
-                    >= int_spin_box_number:
-                shutil.move(destination_path + '\\' + file, destination_path + '\\'
-                            + file.split(' - ')[0].lower().title() + '\\' + file)
+        if radio_value.get() == 2 or radio_value.get() == 3:
+            for file in directory_path_view[2]:
+                if artist_dic.get(file.split(' - ')[0].lower()) >= int_spin_box_number:
+                    try:
+                        move(destination_path + '\\' + file,
+                             destination_path + '\\' + file.split(' - ')[0].lower().title() + '\\' + file)
+                    except FileNotFoundError:
+                        pass
 
         # Check if number of file in directories < int_spin_box_number
-        for directory in next(os.walk(destination_path))[1]:
-            if len(os.listdir(destination_path + '\\' + directory)) < int_spin_box_number:
+        for directory in directory_path_view[1]:
+            if len(os.listdir(destination_path + '\\' + directory)) < int_spin_box_number or radio_value.get() == 1:
                 for file in os.listdir(destination_path + '\\' + directory):
-                    shutil.move(destination_path + '\\' + directory + '\\' + file, destination_path + '\\' + file)
+                    move(destination_path + '\\' + directory + '\\' + file, destination_path + '\\' + file)
 
         # Remove directories with 0 files
-        for element in os.listdir(destination_path):
-            if element.split('.')[-1] == "mp3" or element.split('.')[-1] == "ogg" \
-                    or element.split('.')[-1] == "MP3" or element.split('.')[-1] == "OGG":
-                pass
-            else:
-                if len(os.listdir(destination_path + '\\' + element)) == 0:
-                    shutil.rmtree(destination_path + '\\' + element, ignore_errors=True)
+        for directory in directory_path_view[1]:
+            if len(os.listdir(destination_path + '\\' + directory)) == 0:
+                rmtree(destination_path + '\\' + directory, ignore_errors=True)
 
         gui.end()
 
@@ -490,37 +465,27 @@ def script():
     mountain_art.pack(side=BOTTOM)
     rail_art.pack(side=BOTTOM)
 
-    global counter, glob_search
     # SCRIPTING PART
-    counter = 0
-    not_allowed = []
-    list_dir = glob.glob(source + "\\Songs\\*")
-
+    loop_counter = 0
     #   Work only on osu folder (avoid issues with "tutorial" and co)
     regex = re.compile(r"^([0-9])+[\s](.)+")
-    for element in list_dir:
-        if regex.search(element.split('\\')[-1]) is not None:
-            pass
-        else:
-            not_allowed.append(element)
-    for element in not_allowed:
-        list_dir.remove(element)
 
-    for element in list_dir:
-        percent = int(round((counter/len(list_dir))*100))
-        for extension in ["*.mp3", "*.ogg", "*.m4a", ".mp3", ".ogg", ".m4a"]:
-            if len(glob.glob(element + "\\" + extension)) == 0:
-                pass
-            else:
-                glob_search = glob.glob(element + "\\" + extension)[0]
-                func.avoid_duplicates()
-                break
+    list_dir = [x for x in next(os.walk(source + '\\Songs'))[1] if regex.search(x) is not None]
+    for directory in list_dir:
+        percent = int(round((loop_counter/len(list_dir))*100))
 
-        counter += 1
+        for file in os.listdir(source + '\\Songs\\' + directory):
+            for extension_type in ['.mp3', '.MP3' '.ogg', '.m4a']:
+                if file.endswith(extension_type):
+                    music_file_path = source + '\\Songs\\' + directory + '\\' + file
+                    if func.avoid_duplicates(loop_counter) is False:
+                        func.copy_rename(music_file_path, loop_counter)
+                        break
 
+        loop_counter += 1
         # TRAIN MOVEMENT
-        var_int = ((326*counter)/len(list_dir))
-        if ((326*counter)/len(list_dir)) <= 163:
+        var_int = ((326*loop_counter)/len(list_dir))
+        if var_int <= 163:
             train_art.pack(side=LEFT, padx=var_int)
         else:
             train_art.pack(side=RIGHT, padx=326-var_int)
@@ -528,9 +493,9 @@ def script():
         # PRINTING INFORMATION
         loading.set(" ______________________________________________________________\n"
                     "|                                                              |\n"
-                    "|              Script in progress : " + str(counter) + "/"
+                    "|              Script in progress : " + str(loop_counter) + "/"
                     + str(len(list_dir)) + " (" + str(percent) + "%)"
-                    + " " * (22 - (len(str(counter)) + len(str(len(list_dir))) + len(str(percent)))) + "|\n"
+                    + " " * (22 - (len(str(loop_counter)) + len(str(len(list_dir))) + len(str(percent)))) + "|\n"
                     "|______________________________________________________________|")
         text_art.pack(side=TOP)
         root.update()
