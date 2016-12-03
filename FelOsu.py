@@ -417,17 +417,38 @@ class Function:
 
     @staticmethod
     def script_to_end():
+        # BRACKET Remove
+        for file in next(os.walk(destination_path))[2]:
+            try:
+                os.rename(destination_path + "\\" + file,
+                          destination_path + "\\" + file.replace("-BRACKET1-", "[").replace("-BRACKET2-", "]"))
+            except FileNotFoundError:
+                pass
+            except FileExistsError:
+                os.remove(destination_path + "\\" + file)
+
+        for directory in next(os.walk(destination_path))[1]:
+            for file in directory:
+                try:
+                    os.rename(destination_path + "\\" + directory + "\\" + file,
+                              destination_path + "\\" + directory + "\\"
+                              + file.replace("-BRACKET1-", "[").replace("-BRACKET2-", "]"))
+                except FileNotFoundError:
+                    pass
+                except FileExistsError:
+                    os.remove(destination_path + "\\" + directory + "\\" + file)
+
         directory_path_view = next(os.walk(destination_path))
 
         # Bug 775
         if radio_value.get() == 2 or radio_value.get() == 3:
             for file in directory_path_view[2]:
-                if artist_dic.get(file.split(' - ')[0].lower()) >= int_spin_box_number:
-                    try:
-                        move(destination_path + '\\' + file,
-                             destination_path + '\\' + file.split(' - ')[0].lower().title() + '\\' + file)
-                    except FileNotFoundError:
-                        pass
+                try:
+                    if artist_dic.get(file.split(' - ')[0].lower()) >= int_spin_box_number:
+                            move(destination_path + '\\' + file,
+                                 destination_path + '\\' + file.split(' - ')[0].lower().title() + '\\' + file)
+                except TypeError:
+                    pass
 
         # Check if number of file in directories < int_spin_box_number
         for directory in directory_path_view[1]:
