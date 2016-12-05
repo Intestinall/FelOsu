@@ -143,9 +143,12 @@ class GraphicalUserInterface:
         Button(root, text="Exit", command=gui.exit_func, width=10).pack(side=RIGHT, padx=12, pady=15)
         Button(root, text="Next >", command=gui.browse, width=10).pack(side=RIGHT, pady=15)
         root.protocol("WM_DELETE_WINDOW", gui.exit_func)
-        if "00000000001300" not in urllib.request.urlopen("https://osu.ppy.sh/forum/t/520493").read().decode("utf-8"):
-            if askyesno("Update Available !", "An update is available,\ndo you want to download it ?"):
-                webbrowser.open("https://osu.ppy.sh/forum/t/520493")
+        try:
+            if "00000000001301" not in urllib.request.urlopen("https://osu.ppy.sh/forum/t/520493").read().decode("utf-8"):
+                if askyesno("Update Available !", "An update is available,\ndo you want to download it ?"):
+                    webbrowser.open("https://osu.ppy.sh/forum/t/520493")
+        except:
+            pass
 
 
     @staticmethod
@@ -497,11 +500,12 @@ def script():
     regex = re.compile(r"^([0-9])+[\s](.)+")
 
     list_dir = [x for x in next(os.walk(source + '\\Songs'))[1] if regex.search(x) is not None]
+    len_list_dir = len(list_dir)
     for directory in list_dir:
-        percent = int(round((loop_counter/len(list_dir))*100))
+        percent = round((loop_counter/len_list_dir)*100)
 
         for file in os.listdir(source + '\\Songs\\' + directory):
-            for extension_type in ['.mp3', '.MP3' '.ogg', '.m4a']:
+            for extension_type in ['.mp3', '.MP3', '.ogg', '.OGG', '.m4a', '.M4A']:
                 if file.endswith(extension_type):
                     music_file_path = source + '\\Songs\\' + directory + '\\' + file
                     if func.avoid_duplicates(loop_counter) is False:
@@ -510,7 +514,7 @@ def script():
 
         loop_counter += 1
         # TRAIN MOVEMENT
-        var_int = ((326*loop_counter)/len(list_dir))
+        var_int = ((326*loop_counter)/len_list_dir)
         if var_int <= 163:
             train_art.pack(side=LEFT, padx=var_int)
         else:
@@ -520,8 +524,8 @@ def script():
         loading.set(" ______________________________________________________________\n"
                     "|                                                              |\n"
                     "|              Script in progress : " + str(loop_counter) + "/"
-                    + str(len(list_dir)) + " (" + str(percent) + "%)"
-                    + " " * (22 - (len(str(loop_counter)) + len(str(len(list_dir))) + len(str(percent)))) + "|\n"
+                    + str(len_list_dir) + " (" + str(percent) + "%)"
+                    + " " * (22 - (len(str(loop_counter)) + len(str(len_list_dir)) + len(str(percent)))) + "|\n"
                     "|______________________________________________________________|")
         text_art.pack(side=TOP)
         root.update()
