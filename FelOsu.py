@@ -52,7 +52,7 @@ train_text = """
   __|_|____  __\___|___  ___|_|_     __\___/__  ___/__/___  _\_,_|_             o
  |[] [] []| [] [] [] [] [_____(__   |[] [] []| [] [] [] [] [_____(__  ][]]_n_n__][.
  |________|_[_________]_[________]__|________|_[_________]_[________]_|__|________)<
-  oo    oo 'oo      oo ' oo    oo '  oo    oo 'oo      oo ' oo    oo 'oo 0000---oo\_"""
+  oo    oo ' oo     oo ' oo    oo '  oo    oo ' oo     oo ' oo    oo ' oo 000---oo\_"""
 
 rail_text = "#" * 135
 
@@ -143,13 +143,9 @@ class GraphicalUserInterface:
         Button(root, text="Exit", command=gui.exit_func, width=10).pack(side=RIGHT, padx=12, pady=15)
         Button(root, text="Next >", command=gui.browse, width=10).pack(side=RIGHT, pady=15)
         root.protocol("WM_DELETE_WINDOW", gui.exit_func)
-        try:
-            if "00000000001301" not in urllib.request.urlopen("https://osu.ppy.sh/forum/t/520493").read().decode("utf-8"):
-                if askyesno("Update Available !", "An update is available,\ndo you want to download it ?"):
-                    webbrowser.open("https://osu.ppy.sh/forum/t/520493")
-        except:
-            pass
-
+        if "00000000001300" not in urllib.request.urlopen("https://osu.ppy.sh/forum/t/520493").read().decode("utf-8"):
+            if askyesno("Update Available !", "An update is available,\ndo you want to download it ?"):
+                webbrowser.open("https://osu.ppy.sh/forum/t/520493")
 
     @staticmethod
     def browse():
@@ -415,7 +411,6 @@ class Function:
             for file in os.listdir(destination_path + '\\' + destination_directory):
                 if file.lower().startswith(artist_music[counter].lower() + '.'):
                     return True
-
         return False
 
     @staticmethod
@@ -505,7 +500,7 @@ def script():
         percent = round((loop_counter/len_list_dir)*100)
 
         for file in os.listdir(source + '\\Songs\\' + directory):
-            for extension_type in ['.mp3', '.MP3', '.ogg', '.OGG', '.m4a', '.M4A']:
+            for extension_type in ['.mp3', '.MP3', '.ogg', '.OGG', '.m4a']:
                 if file.endswith(extension_type):
                     music_file_path = source + '\\Songs\\' + directory + '\\' + file
                     if func.avoid_duplicates(loop_counter) is False:
