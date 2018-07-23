@@ -8,7 +8,7 @@ This software is made for everyone who is bored to copy, rename and sort manuall
 
 ## Installation
 
-No installation is need.
+No installation needed.
 It's only a standalone executable file.
 
 ## Contributors
